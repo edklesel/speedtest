@@ -1,0 +1,22 @@
+{
+  "logging": {
+    "level": "DEBUG",
+    "location": "./Logs/",
+    "filename":  "speedtest_log_{}.log",
+    "format":  "%(asctime)s - %(levelname)-7s - %(message)s"
+  },
+  "database": {
+    "host": "EdsPi",
+    "user": "pi",
+    "password": "3762Eighteen021995!",
+    "database": "speedtest"
+  },
+  "csv": {
+    "location": "./",
+    "filename": "speed.csv"
+  },
+  "storage": {
+    "database": 1,
+    "csv":  0
+  }
+}
