@@ -110,4 +110,4 @@ if config["storage"]["database"] == 1:
         logger.error('Unable to insert results into DB. Please run insert manually.')
         logger.error(query)
 
-# This does nothing
+# This does nothing v2
