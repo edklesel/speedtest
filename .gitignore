@@ -6,8 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+# VSCode
+.vscode/
+
 # Distribution / packaging
 .Python
+venv/
 build/
 develop-eggs/
 dist/
@@ -106,3 +110,4 @@ venv.bak/
 # misc files
 speed.csv
 config.json
+main.old.py
