@@ -26,11 +26,13 @@ class Connection():
         logger.debug(f'Executing query: {query}')
         self.cursor.execute(query)
         self.conn.commit()
+        return self.cursor
 
     def executescript(self, query):
         logger.debug(f'Executing script: {query}')
         self.cursor.executescript(query)
         self.conn.commit()
+        return self.cursor
 
 def initialise_db():
     logger.debug('Inisialising database speedtest.db.')

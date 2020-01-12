@@ -1,0 +1,1 @@
+SELECT TestCol1, TestCol2 FROM TestTable

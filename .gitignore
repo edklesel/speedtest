@@ -111,3 +111,6 @@ venv.bak/
 speed.csv
 config.json
 main.old.py
+results.xml
+speedtest.db
+tests.db

@@ -1,0 +1,1 @@
+SELECT dtDateTime, fDownloadSpeed, fUploadSpeed FROM Speeds LIMIT 1;
