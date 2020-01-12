@@ -4,8 +4,8 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStartPre=cd /usr/speedtest
-ExecStartPre=/venv/bin/activate
+ExecStartPre=cd /opt/speedtest
+ExecStartPre=source venv/bin/activate
 ExecStart=python3 main.py
 
 [Install]
