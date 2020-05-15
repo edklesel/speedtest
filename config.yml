@@ -1,1 +1,11 @@
 DEBUG: 1
+
+# Write to SQLite DB?
+# sqlite:
+
+# Write to InfluxDB?
+influxdb:
+    host: 192.168.0.55
+    port: 8086
+    # username: username
+    # password: password
