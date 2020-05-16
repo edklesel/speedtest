@@ -93,4 +93,3 @@ def record_speed(download, upload, server=None, datetime=dt.utcnow()):
 
     with Connection(database='speedtest') as client:
         client.write_points(json_body)
-        client.close()
