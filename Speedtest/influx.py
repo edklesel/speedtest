@@ -74,7 +74,7 @@ class Connection():
 
 
 # Record a speed to the InfluxDB instance
-def record_speed(download, upload, server=None, datetime=dt.utcnow()):
+def record_speed(download, upload, server=None, datetime=dt.utcnow(), database='speedtest'):
     
     logger.debug('Writing data to InfluxDB.')
     json_body = [
@@ -91,5 +91,5 @@ def record_speed(download, upload, server=None, datetime=dt.utcnow()):
         }
     ]
 
-    with Connection(database='speedtest') as client:
+    with Connection(database=database) as client:
         client.write_points(json_body)
