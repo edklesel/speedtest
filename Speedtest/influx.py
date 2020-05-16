@@ -62,6 +62,7 @@ class Connection():
             logger.error(f'Unable to open connection to {self.host}:{self.port}')
             raise
 
+        client.create_database(self.database)
         return self.client
 
 
@@ -90,6 +91,5 @@ def record_speed(download, upload, server, datetime=dt.utcnow()):
     ]
 
     with Connection(database='speedtest') as client:
-        client.create_database('speedtest')
         client.write_points(json_body)
         client.close()
