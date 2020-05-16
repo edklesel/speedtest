@@ -17,4 +17,6 @@ class TestSpeedtest(unittest.TestCase):
         except (AttributeError, TypeError):
             raise AssertionError('Upload value should be a float.')
 
-        self.assertTrue(len(results) == 2)
+        self.assertTrue(type(results[2]) is str)
+
+        self.assertTrue(len(results) == 3, msg=f"len(results)={len(results)}")

@@ -20,7 +20,7 @@ class ConfigError(Error):
 class Connection():
 
     # Load config from config.yml
-    def __init__(self, database):
+    def __init__(self, database=None):
 
         with open('config.yml') as f:
             config = load(f.read(), Loader=Loader)
@@ -62,6 +62,8 @@ class Connection():
             logger.error(f'Unable to open connection to {self.host}:{self.port}')
             raise
 
+        if self.database:
+            self.client.create_database(self.database)
         return self.client
 
 
@@ -72,7 +74,7 @@ class Connection():
 
 
 # Record a speed to the InfluxDB instance
-def record_speed(download, upload, server, datetime=dt.utcnow()):
+def record_speed(download, upload, server=None, datetime=dt.utcnow(), database='speedtest'):
     
     logger.debug('Writing data to InfluxDB.')
     json_body = [
@@ -89,7 +91,5 @@ def record_speed(download, upload, server, datetime=dt.utcnow()):
         }
     ]
 
-    with Connection(database='speedtest') as client:
-        client.create_database('speedtest')
+    with Connection(database=database) as client:
         client.write_points(json_body)
-        client.close()
