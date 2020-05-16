@@ -20,7 +20,7 @@ class ConfigError(Error):
 class Connection():
 
     # Load config from config.yml
-    def __init__(self, database):
+    def __init__(self, database=None):
 
         with open('config.yml') as f:
             config = load(f.read(), Loader=Loader)
@@ -62,7 +62,8 @@ class Connection():
             logger.error(f'Unable to open connection to {self.host}:{self.port}')
             raise
 
-        client.create_database(self.database)
+        if self.database:
+            self.client.create_database(self.database)
         return self.client
 
 
