@@ -35,9 +35,10 @@ class Connection():
         return self.cursor
 
 def initialise_db():
-    logger.debug('Inisialising database speedtest.db.')
-    with Connection('speedtest.db') as c, open(os.path.join('Speedtest','Queries','table_speeds.sql')) as f:
-        c.executescript(f.read())
+    if not os.path.exists('speedtest.db'):
+        logger.debug('Inisialising database speedtest.db.')
+        with Connection('speedtest.db') as c, open(os.path.join('Speedtest','Queries','table_speeds.sql')) as f:
+            c.executescript(f.read())
 
 
 def record_speed(download: float, upload: float, datetime=dt.now()):
