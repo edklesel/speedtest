@@ -1,0 +1,57 @@
+pipeline{
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                script{
+                    // Get the IP of the agent to put in the InfluxDB config file
+                    influx_ip = sh(script: "ifconfig wlan0 | grep 'inet ' | awk '{print \$2}'", returnStdout: true).trim()
+                    // Get the name of the node so that the container can be torn down at the end of the pipeline
+                    node_influxdb = NODE_NAME
+
+                    // Run the InfluxDB container
+                    sh('docker run --rm --name jenkins_speedtest_influx -p 18083:8083 -p 18086:8086 -p 18090:8090 -d influxdb:latest')
+                }
+            }
+        }
+        stage('Run Tests'){
+            steps {
+                git(
+                    url: 'https://github.com/edklesel/speedtest.git',
+                    credentialsId: '517b9894-fafd-45ce-9b9e-c53d20c5f64d'
+                )
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    // Modify the config file to use the InfluxDB database
+                    script{
+                        sh('mv config.yml.example config.yml')
+                        sh("sed -i 's/host: hostname/host: $influx_ip/' config.yml")
+                        sh("sed -i 's/# port: 8086/port: 18086/' config.yml")
+                    }
+                    
+                    // Create the virtual environment
+                    script{
+                        sh('python3 -m venv venv')
+                        sh('. venv/bin/activate')
+                        sh('python3 -m pip install -r requirements.txt')
+                    }
+                    // Run the unit tests using pytest
+                    sh('python3 -m pytest Tests/ --junit-xml=results.xml')
+                }
+            }
+        }
+        stage('Tear down'){
+            agent {label node_influxdb}
+            steps{
+                script{
+                    sh('docker stop jenkins_speedtest_influx')
+                }
+                cleanWs()
+            }
+        }
+    }
+    post {
+        always {
+            junit 'results.xml'
+        }
+    }
+}
