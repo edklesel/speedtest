@@ -1,0 +1,2 @@
+# Run every 30 seconds
+*/15 * * * * * * python3 ./main.py

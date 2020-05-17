@@ -1,0 +1,9 @@
+version: '3'
+services:
+  dockmon: 
+    image: eddi16/speedtest:latest
+    container_name: speedtest
+    volumes:
+      - /opt/docker/speedtest/config.yml:/app/speedtest.yml
+      - /opt/docker/speedtest/speedtest.cron:/app/speedtest.cron
+      - /var/logs/speedtest:/app/logs
