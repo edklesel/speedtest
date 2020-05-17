@@ -35,24 +35,4 @@ if __name__ == '__main__':
     if 'sqlite' in config.keys():
         database.initialise_db()
 
-    # Main routine
-    while True:
-
-        try:
-            main()
-
-        except KeyboardInterrupt:
-            print('Stopping')
-            exit(1)
-
-        except:
-            logger.exception('Error collecting data.')
-            
-        finally:
-
-            try:
-                sleep(10)
-            except KeyboardInterrupt:
-                print('Stopping')
-                exit(1)
-
+    main()
