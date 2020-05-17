@@ -4,6 +4,7 @@ services:
     image: eddi16/speedtest:latest
     container_name: speedtest
     volumes:
-      - /opt/docker/speedtest/config.yml:/app/speedtest.yml
+      - /opt/docker/speedtest/config.yml:/app/config.yml
       - /opt/docker/speedtest/speedtest.cron:/app/speedtest.cron
       - /var/logs/speedtest:/app/logs
+    restart: unless-stopped
